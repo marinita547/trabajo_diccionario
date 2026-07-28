@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diccionario Web</title>
+    <link rel="stylesheet" href="asstes/css/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Diccionario Web</h1>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#secciones">Información</a></li>
+                <li><a href="#quiz">Quiz</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio">
+            <h2>Bienvenido al Diccionario</h2>
+            <div class="buscador-container">
+                <input type="text" id="buscador" placeholder="Buscar concepto...">
+            </div>
+        </section>
+
+        <section id="secciones">
+            <h2>Conceptos</h2>
+            <div id="lista-conceptos">
+                </div>
+        </section>
+
+        <section id="quiz">
+            <h2>Autoevaluación / Quiz</h2>
+            <form id="quiz-form">
+                </form>
+        </section>
+
+        <section id="contacto">
+            <h2>Contacto</h2>
+            <form id="form-contacto">
+                <input type="text" placeholder="Tu Nombre" required>
+                <input type="email" placeholder="Tu Correo" required>
+                <textarea placeholder="Tu Mensaje"></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="asstes/js/main.js"></script>
+</body>
+</html>
