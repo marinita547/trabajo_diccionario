@@ -1,13 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
     
-    // --- 1. BUSCADOR Y FILTROS DEL DICCIONARIO ---
+    // --- 1. BUSCADOR Y FILTROS ---
     const searchInput = document.getElementById("searchInput");
     const filterCategory = document.getElementById("filterCategory");
     const cards = document.querySelectorAll(".card");
 
     function filtrarDiccionario() {
-        const searchText = searchInput.value.toLowerCase();
-        const selectedCat = filterCategory.value;
+        const searchText = searchInput ? searchInput.value.toLowerCase() : "";
+        const selectedCat = filterCategory ? filterCategory.value : "todos";
 
         cards.forEach(card => {
             const text = card.textContent.toLowerCase();
@@ -16,38 +16,34 @@ document.addEventListener("DOMContentLoaded", () => {
             const matchesSearch = text.includes(searchText);
             const matchesCategory = selectedCat === "todos" || category === selectedCat;
 
-            if (matchesSearch && matchesCategory) {
-                card.style.display = "block";
-            } else {
-                card.style.display = "none";
-            }
+            card.style.display = (matchesSearch && matchesCategory) ? "block" : "none";
         });
     }
 
-    searchInput.addEventListener("input", filtrarDiccionario);
-    filterCategory.addEventListener("change", filtrarDiccionario);
+    if (searchInput) searchInput.addEventListener("input", filtrarDiccionario);
+    if (filterCategory) filterCategory.addEventListener("change", filtrarDiccionario);
 
 
-    // --- 2. JUEGO QUIZ INTERACTIVO ---
+    // --- 2. QUIZ INTERACTIVO ---
     const quizQuestions = [
         {
             question: '¿Qué significa el término "Bug" en informática?',
-            options: ['Un insecto dentro del monitor', 'Un error o fallo en un programa', 'Un tipo de virus informático', 'Un cable de red desconectado'],
+            options: ['Un insecto en el monitor', 'Un error o fallo en un programa', 'Un tipo de virus', 'Un cable desconectado'],
             answer: 1
         },
         {
-            question: '¿Cuál es la traducción de "Firewall"?',
-            options: ['Muro de descarga', 'Memoria RAM', 'Cortafuegos (Seguridad de red)', 'Servidor en la nube'],
-            answer: 2
+            question: '¿Cuál es la función principal de un "Firewall"?',
+            options: ['Acelerar el Wi-Fi', 'Bloquear tráfico no autorizado (Cortafuegos)', 'Limpiar la pantalla', 'Guardar archivos'],
+            answer: 1
         },
         {
-            question: '¿Qué es "Cloud Computing"?',
-            options: ['Computación en la nube', 'Pantalla con brillo alto', 'Teclado inalámbrico', 'Red local de cables'],
+            question: '¿A qué se refiere "Cloud Computing"?',
+            options: ['Computación en la nube', 'Pantalla con mucho brillo', 'Servidor de videojuegos', 'Memoria USB'],
             answer: 0
         },
         {
-            question: '¿A qué se refiere el término "Framework"?',
-            options: ['Un antivirus', 'Un marco o estructura de trabajo', 'Un archivo ejecutable', 'Un tipo de base de datos'],
+            question: '¿Qué es una "API" en programación?',
+            options: ['Un lenguaje de diseño', 'Interfaz que comunica aplicaciones', 'Una marca de computadora', 'Un ejecutable'],
             answer: 1
         }
     ];
@@ -63,12 +59,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const feedback = document.getElementById("feedback");
 
     function loadQuiz() {
+        if (!optionsContainer || !questionText) return;
+
         feedback.textContent = "";
-        nextBtn.style.display = "none";
+        if (nextBtn) nextBtn.style.display = "none";
 
         const q = quizQuestions[currentQuestion];
-        questionCount.textContent = `Pregunta ${currentQuestion + 1} de ${quizQuestions.length}`;
-        scoreDisplay.textContent = `Puntos: ${score}`;
+        if (questionCount) questionCount.textContent = `Pregunta ${currentQuestion + 1} de ${quizQuestions.length}`;
+        if (scoreDisplay) scoreDisplay.textContent = `Puntos: ${score}`;
         questionText.textContent = q.question;
 
         optionsContainer.innerHTML = "";
@@ -83,44 +81,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function selectOption(selectedIndex, correctIndex, selectedBtn) {
         const buttons = optionsContainer.querySelectorAll(".option-btn");
-        buttons.forEach(btn => btn.disabled = true); // Desactivar otros clics
+        buttons.forEach(btn => btn.disabled = true);
 
         if (selectedIndex === correctIndex) {
             selectedBtn.classList.add("correct");
             score += 10;
-            scoreDisplay.textContent = `Puntos: ${score}`;
-            feedback.textContent = "🎉 ¡Correcto! Excelente respuesta.";
+            if (scoreDisplay) scoreDisplay.textContent = `Puntos: ${score}`;
+            feedback.textContent = "🎉 ¡Correcto!";
             feedback.style.color = "#059669";
         } else {
             selectedBtn.classList.add("incorrect");
             buttons[correctIndex].classList.add("correct");
-            feedback.textContent = "❌ Respuesta incorrecta.";
+            feedback.textContent = "❌ Incorrecto.";
             feedback.style.color = "#dc2626";
         }
 
-        if (currentQuestion < quizQuestions.length - 1) {
-            nextBtn.textContent = "Siguiente Pregunta ➡️";
+        if (nextBtn) {
             nextBtn.style.display = "block";
-        } else {
-            nextBtn.textContent = "Ver Resultado Final 🏆";
-            nextBtn.style.display = "block";
+            if (currentQuestion < quizQuestions.length - 1) {
+                nextBtn.textContent = "Siguiente Pregunta ➡️";
+            } else {
+                nextBtn.textContent = "Ver Resultado Final 🏆";
+            }
         }
     }
 
-    nextBtn.addEventListener("click", () => {
-        currentQuestion++;
-        if (currentQuestion < quizQuestions.length) {
-            loadQuiz();
-        } else {
-            showFinalScore();
-        }
-    });
+    if (nextBtn) {
+        nextBtn.addEventListener("click", () => {
+            currentQuestion++;
+            if (currentQuestion < quizQuestions.length) {
+                loadQuiz();
+            } else {
+                showFinalScore();
+            }
+        });
+    }
 
     function showFinalScore() {
         questionText.textContent = "🏆 ¡Juego Completado!";
-        optionsContainer.innerHTML = `<p style="font-size: 1.3rem; text-align:center;">Tu puntuación final fue de <strong>${score} puntos</strong> de ${quizQuestions.length * 10} posibles.</p>`;
-        nextBtn.textContent = "🔄 Jugar de nuevo";
-        nextBtn.addEventListener("click", () => location.reload());
+        optionsContainer.innerHTML = `<p style="font-size: 1.2rem; text-align:center;">Puntuación final: <strong>${score} puntos</strong> de ${quizQuestions.length * 10}.</p>`;
+        if (nextBtn) {
+            nextBtn.textContent = "🔄 Jugar de nuevo";
+            nextBtn.style.display = "block";
+            nextBtn.onclick = () => location.reload();
+        }
     }
 
     loadQuiz();
@@ -129,12 +133,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const contactForm = document.getElementById("contactForm");
     const formStatus = document.getElementById("formStatus");
 
-    contactForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        formStatus.textContent = "✅ ¡Gracias! Tu sugerencia ha sido enviada con éxito.";
-        formStatus.style.color = "#059669";
-        formStatus.style.marginTop = "1rem";
-        formStatus.style.textAlign = "center";
-        contactForm.reset();
-    });
+    if (contactForm) {
+        contactForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            formStatus.textContent = "✅ ¡Gracias! Sugerencia enviada con éxito.";
+            formStatus.style.color = "#059669";
+            formStatus.style.marginTop = "1rem";
+            formStatus.style.textAlign = "center";
+            contactForm.reset();
+        });
+    }
 });
