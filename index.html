@@ -3,67 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diccionario Web</title>
+    <title>TechDict - Diccionario de Informática Inglés-Español</title>
     <link rel="stylesheet" href="asstes/css/style.css">
 </head>
 <body>
 
-    <header>
-        <h1>Diccionario Web</h1>
+    <header id="inicio">
+        <div class="logo">
+            <h1>💻 TechDict</h1>
+            <p>Diccionario de Informática Inglés - Español</p>
+        </div>
         <nav>
             <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#secciones">Información</a></li>
-                <li><a href="#quiz">Quiz</a></li>
-                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#inicio" class="btn-nav">🏠 Inicio</a></li>
+                <li><a href="#diccionario" class="btn-nav">📖 Diccionario</a></li>
+                <li><a href="#quiz" class="btn-nav">🎮 Quiz Game</a></li>
+                <li><a href="#contacto" class="btn-nav">✉️ Contacto</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <section id="inicio">
-            <h2>Bienvenido al Diccionario</h2>
-            <div class="buscador-container">
-                <input type="text" id="buscador" placeholder="Buscar concepto...">
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Aprende el lenguaje de la tecnología</h2>
+                <p>Domina los términos técnicos más utilizados en programación, redes y sistemas en inglés con sus traducciones al español.</p>
+                <a href="#diccionario" class="btn-hero">Explorar Términos</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80" alt="Programación y tecnología">
             </div>
         </section>
 
-        <section id="secciones">
-            <h2>Conceptos</h2>
-            <div id="lista-conceptos">
-                <section id="secciones">
-            <h2>Conceptos del Diccionario</h2>
-            <div id="lista-conceptos">
-                <article class="concepto">
-                    <h3>HELLO WORLD</h3>
-                    <p>Hola mundo es el primer programa básico en programación.</p>
-                </article>
+        <section id="diccionario" class="container">
+            <h2>📖 Diccionario Técnico</h2>
+            <p class="subtitle">Busca un término en inglés o español o filtra por categoría:</p>
+
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar término (ej. Bug, Frontend, Backend)...">
+                <select id="filterCategory">
+                    <option value="todos">Todas las categorías</option>
+                    <option value="programacion">Programación</option>
+                    <option value="redes">Redes y Seguridad</option>
+                    <option value="hardware">Hardware & Cloud</option>
+                </select>
+            </div>
+
+            <div class="grid-conceptos" id="conceptosContainer">
                 
-                <article class="concepto">
-                    <h3>Término 2</h3>
-                    <p>Aquí escribes la definición o explicación detallada del segundo concepto de tu investigación.</p>
+                <article class="card" data-category="programacion">
+                    <span class="tag">Programación</span>
+                    <h3>Algorithm / <span>Algoritmo</span></h3>
+                    <p>Conjunto ordenado y finito de operaciones que permite hallar la solución de un problema o ejecutar una tarea informática.</p>
+                    <small>📌 Ejemplo: "A sorting algorithm."</small>
                 </article>
+
+                <article class="card" data-category="programacion">
+                    <span class="tag">Programación</span>
+                    <h3>Bug / <span>Error de Software</span></h3>
+                    <p>Fallo, error o defecto en un programa informático que produce un resultado no deseado o incorrecto.</p>
+                    <small>📌 Ejemplo: "Debugging the application."</small>
+                </article>
+
+                <article class="card" data-category="programacion">
+                    <span class="tag">Programación</span>
+                    <h3>Framework / <span>Marco de Trabajo</span></h3>
+                    <p>Estructura previa sobre la cual un desarrollador puede construir aplicaciones sin tener que empezar desde cero.</p>
+                    <small>📌 Ejemplo: "React is a JS library/framework."</small>
+                </article>
+
+                <article class="card" data-category="redes">
+                    <span class="tag">Redes y Seguridad</span>
+                    <h3>Firewall / <span>Cortafuegos</span></h3>
+                    <p>Sistema de seguridad de red que monitorea y controla el tráfico entrante y saliente según reglas predefinidas.</p>
+                    <small>📌 Ejemplo: "Blocked by the network firewall."</small>
+                </article>
+
+                <article class="card" data-category="redes">
+                    <span class="tag">Redes y Seguridad</span>
+                    <h3>Bandwidth / <span>Ancho de Banda</span></h3>
+                    <p>Cantidad máxima de datos transmitidos a través de una conexión de red en un periodo de tiempo determinado.</p>
+                    <small>📌 Ejemplo: "High bandwidth connection."</small>
+                </article>
+
+                <article class="card" data-category="hardware">
+                    <span class="tag">Hardware & Cloud</span>
+                    <h3>Cloud Computing / <span>Computación en la Nube</span></h3>
+                    <p>Entrega de servicios de computación (servidores, almacenamiento, bases de datos) a través de Internet.</p>
+                    <small>📌 Ejemplo: "Deployed on AWS Cloud."</small>
+                </article>
+
             </div>
         </section>
+
+        <section id="quiz" class="container quiz-section">
+            <h2>🎮 Quiz Challenge: ¿Cuánto sabes?</h2>
+            <p class="subtitle">Demuestra tu conocimiento respondiendo las preguntas del juego interactivo:</p>
+
+            <div class="quiz-card" id="quizContainer">
+                <div class="quiz-header">
+                    <span id="questionCount">Pregunta 1 de 4</span>
+                    <span id="scoreDisplay">Puntos: 0</span>
                 </div>
+                
+                <h3 id="questionText">¿Qué significa el término "Bug" en informática?</h3>
+                
+                <div class="options-container" id="optionsContainer">
+                    </div>
+
+                <div id="feedback" class="feedback"></div>
+
+                <button id="nextBtn" class="btn-quiz" style="display: none;">Siguiente Pregunta ➡️</button>
+            </div>
         </section>
 
-        <section id="quiz">
-            <h2>Autoevaluación / Quiz</h2>
-            <form id="quiz-form">
-                </form>
-        </section>
+        <section id="contacto" class="container">
+            <h2>✉️ Contacto y Sugerencias</h2>
+            <p class="subtitle">¿Quieres agregar una nueva palabra al diccionario? ¡Escríbenos!</p>
 
-        <section id="contacto">
-            <h2>Contacto</h2>
-            <form id="form-contacto">
-                <input type="text" placeholder="Tu Nombre" required>
-                <input type="email" placeholder="Tu Correo" required>
-                <textarea placeholder="Tu Mensaje"></textarea>
-                <button type="submit">Enviar</button>
+            <form id="contactForm" class="form-card">
+                <div class="form-group">
+                    <label for="nombre">Nombre completo:</label>
+                    <input type="text" id="nombre" required placeholder="Tu nombre">
+                </div>
+                <div class="form-group">
+                    <label for="email">Correo electrónico:</label>
+                    <input type="email" id="email" required placeholder="tu@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="mensaje">Término que sugieres o mensaje:</label>
+                    <textarea id="mensaje" rows="4" required placeholder="Ej: Me gustaría agregar el término API..."></textarea>
+                </div>
+                <button type="submit" class="btn-hero">Enviar Sugerencia</button>
             </form>
+            <div id="formStatus" class="form-status"></div>
         </section>
     </main>
+
+    <a href="#inicio" class="back-to-top" title="Volver al Inicio">⬆️</a>
+
+    <footer>
+        <p>&copy; 2026 TechDict - Proyecto Escolar de Informática. Creado por <strong>marinita547</strong>.</p>
+    </footer>
 
     <script src="asstes/js/main.js"></script>
 </body>
